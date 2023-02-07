@@ -1,7 +1,15 @@
 const uuid = require("uuid");
 const express = require("express");
+
 const app = express();
 const port = 7777;
+
+// Disable CORS
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+  next();
+});
 
 var data = [
   {
@@ -17,7 +25,8 @@ var data = [
 ];
 
 app.get("/notes", (req, res) => {
-  res.send(data);
+  console.log("GET /notes");
+  res.json(data);
 });
 
 app.post("/notes", (req, res) => {
@@ -29,8 +38,8 @@ app.post("/notes", (req, res) => {
 });
 
 app.delete("/notes/:id", (req, res) => {
-    data = data.filter((note) => note.id !== req.params.id);
-    res.send(data);
+  data = data.filter((note) => note.id !== req.params.id);
+  res.send(data);
 });
 
 app.listen(port, () => {

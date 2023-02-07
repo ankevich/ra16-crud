@@ -1,19 +1,22 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function App() {
-  const [notes, setNotes] = useState([
-    {
-      id: 1,
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl eu nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl eu nisl.",
-    },
-  ]);
+  const [notes, setNotes] = useState([]);
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:7777/notes")
+      .then((res) => res.json())
+      .then((data) => {
+        setNotes(data);
+      });
+  }, []);
+
   return (
     <>
       {notes.map((note) => {
         return (
-          <div className="note">
+          <div key={note.id}>
             <p>{note.content}</p>
           </div>
         );
