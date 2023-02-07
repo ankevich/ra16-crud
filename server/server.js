@@ -1,19 +1,30 @@
+const uuid = require("uuid");
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = 7777;
 
-const data = [
+var data = [
   {
     id: 0,
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl eu nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl eu nisl.",
+    content:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl eu nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl eu nisl.",
   },
   {
     id: 1,
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl eu nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl eu nisl.",
-  }
+    content:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl eu nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl eu nisl.",
+  },
 ];
 
-app.get("/", (req, res) => {
+app.get("/notes", (req, res) => {
+  res.send(data);
+});
+
+app.post("/notes", (req, res) => {
+  data.push({
+    id: uuid.v4(),
+    content: req.body.content,
+  });
   res.send(data);
 });
 
