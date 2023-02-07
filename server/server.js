@@ -28,6 +28,11 @@ app.post("/notes", (req, res) => {
   res.send(data);
 });
 
+app.delete("/notes/:id", (req, res) => {
+    data = data.filter((note) => note.id !== req.params.id);
+    res.send(data);
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
