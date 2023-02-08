@@ -54,7 +54,9 @@ function App() {
     <>
       <HeaderContainer>
         <h1>Notes</h1>
-        <button onClick={() => {}}>🔄</button>
+        <button onClick={() => {
+          refreshNotes();
+        }}>🔄</button>
       </HeaderContainer>
       <NotesContainer>
         {notes.map((note) => (
