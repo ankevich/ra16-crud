@@ -2,6 +2,7 @@ const uuid = require("uuid");
 const express = require("express");
 
 const app = express();
+
 const port = 7777;
 
 // Disable CORS for all routes and requests including DELETE
@@ -14,6 +15,7 @@ app.use((req, res, next) => {
   );
   next();
 });
+app.use(express.json());
 
 var data = [
   {
@@ -29,11 +31,13 @@ var data = [
 ];
 
 app.get("/notes", (req, res) => {
-  console.log("GET /notes");
+  console.log("GET \t/notes");
   res.json(data);
 });
 
 app.post("/notes", (req, res) => {
+  console.log("POST \t/notes");
+  console.log(req.body);
   data.push({
     id: uuid.v4(),
     content: req.body.content,
@@ -43,7 +47,7 @@ app.post("/notes", (req, res) => {
 
 app.delete("/notes/:id", (req, res) => {
   const id = req.params.id;
-  console.log("DELETE /notes/" + id);
+  console.log("DELETE \t/notes/" + id);
   data = data.filter((note) => note.id !== id);
   res.send(data);
 });

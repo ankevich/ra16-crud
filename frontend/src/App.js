@@ -21,7 +21,7 @@ const HeaderContainer = styled.div`
   align-items: center;
 `;
 
-const NewNote = styled.div`
+const NewNote = styled.form`
   border: 1px solid black;
   padding: 10px;
   margin: 10px;
@@ -74,10 +74,24 @@ function App() {
           </Note>
         ))}
       </NotesContainer>
-      <NewNote>
+      <NewNote onSubmit={
+        (e) => {
+          e.preventDefault();
+          const content = e.target.content.value;
+          fetch("http://localhost:7777/notes", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ content }),
+          }).then(() => {
+            refreshNotes();
+          });
+        }
+      }>
         <strong>New note</strong>
-        <textarea />
-        <button onClick={() => {}}>➡️</button>
+        <textarea name="content"/>
+        <input type="submit" value="➡️" />
       </NewNote>
     </>
   );
