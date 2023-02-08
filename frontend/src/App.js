@@ -38,12 +38,16 @@ const NewNote = styled.div`
 function App() {
   const [notes, setNotes] = useState([]);
 
-  useEffect(() => {
+  const refreshNotes = () => {
     fetch("http://127.0.0.1:7777/notes")
       .then((res) => res.json())
       .then((data) => {
         setNotes(data);
       });
+  };
+
+  useEffect(() => {
+    refreshNotes();
   }, []);
 
   return (
@@ -55,16 +59,26 @@ function App() {
       <NotesContainer>
         {notes.map((note) => (
           <Note key={note.id}>
-            <button onClick={() => {}}>❌</button>
+            <button
+              onClick={() => {
+                fetch(`http://localhost:7777/notes/${note.id}`, {
+                  method: "DELETE",
+                }).then(() => {
+                  refreshNotes();
+                });
+              }}
+            >
+              ❌
+            </button>
             <p>{note.content}</p>
           </Note>
         ))}
       </NotesContainer>
-        <NewNote>
-          <textarea />
-          <button onClick={() => {}}>➡️</button>
-          
-        </NewNote>
+      <NewNote>
+        <strong>New note</strong>
+        <textarea />
+        <button onClick={() => {}}>➡️</button>
+      </NewNote>
     </>
   );
 }

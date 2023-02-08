@@ -4,21 +4,25 @@ const express = require("express");
 const app = express();
 const port = 7777;
 
-// Disable CORS
+// Disable CORS for all routes and requests including DELETE
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, DELETE");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   next();
 });
 
 var data = [
   {
-    id: 0,
+    id: "0",
     content:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl eu nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl eu nisl.",
   },
   {
-    id: 1,
+    id: "1",
     content:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl eu nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl eu nisl.",
   },
@@ -38,7 +42,9 @@ app.post("/notes", (req, res) => {
 });
 
 app.delete("/notes/:id", (req, res) => {
-  data = data.filter((note) => note.id !== req.params.id);
+  const id = req.params.id;
+  console.log("DELETE /notes/" + id);
+  data = data.filter((note) => note.id !== id);
   res.send(data);
 });
 
