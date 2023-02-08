@@ -21,6 +21,20 @@ const HeaderContainer = styled.div`
   align-items: center;
 `;
 
+const NewNote = styled.div`
+  border: 1px solid black;
+  padding: 10px;
+  margin: 10px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  textarea {
+    height: 100%;
+    min-height: 120px;
+  }
+`;
+
 function App() {
   const [notes, setNotes] = useState([]);
 
@@ -46,6 +60,11 @@ function App() {
           </Note>
         ))}
       </NotesContainer>
+        <NewNote>
+          <textarea />
+          <button onClick={() => {}}>➡️</button>
+          
+        </NewNote>
     </>
   );
 }
